@@ -45,8 +45,8 @@ SELECT q.QuestionID, q.Content, COUNT(AnswerID) AS Number_of_answers
 FROM Answer a JOIN Question q ON a.QuestionID = q.QuestionID
 GROUP BY q.QuestionID, q.Content
 HAVING COUNT(AnswerID) >= ALL(SELECT COUNT(AnswerID) AS Number_of_answers
-							  FROM Answer a JOIN Question q ON a.QuestionID = q.QuestionID
-							  GROUP BY q.QuestionID, q.Content); 
+							  							FROM Answer a JOIN Question q ON a.QuestionID = q.QuestionID
+							  							GROUP BY q.QuestionID, q.Content); 
 
 -- Question 9: Thống kê số lượng account trong mỗi group
 SELECT GroupId, COUNT(AccountID) AS Number_of_account
@@ -67,7 +67,8 @@ FROM Positions p JOIN (SELECT PositionID, COUNT(AccountID) AS SL_Nhan_Su
 SELECT d.DepartmentID, d.DepartmentName, p.PositionName, COUNT(p.PositionID) AS SL_Nhan_Su
 FROM Department d JOIN `Account` a ON d.DepartmentID = a.DepartmentID
 				  JOIN Positions p ON p.PositionID = a.PositionID
-GROUP BY d.DepartmentID, d.DepartmentName, p.PositionName;
+GROUP BY d.DepartmentID, d.DepartmentName, p.PositionName
+ORDER BY `DepartmentName`;
 
 -- Question 12: Lấy thông tin chi tiết của câu hỏi bao gồm: thông tin cơ bản của
 -- question, loại câu hỏi, ai là người tạo ra câu hỏi, câu trả lời là gì, …

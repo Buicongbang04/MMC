@@ -23,8 +23,8 @@ CREATE TABLE account(
     DepartmentID					TINYINT UNSIGNED NOT NULL,
     PositionID						TINYINT UNSIGNED NOT NULL,
     CreateDate						DATETIME DEFAULT NOW(),
-    FOREIGN KEY(DepartmentID) 		REFERENCES Department(DepartmentID),
-    FOREIGN KEY(PositionID)		 	REFERENCES Positions(PositionID)
+    FOREIGN KEY(DepartmentID) 		REFERENCES Department(DepartmentID) ON DELETE CASCADE,
+    FOREIGN KEY(PositionID)		 	REFERENCES Positions(PositionID) ON DELETE CASCADE
  );
  
  DROP TABLE IF EXISTS `Group`;
@@ -33,7 +33,7 @@ CREATE TABLE account(
      GroupName					NVARCHAR(50) NOT NULL UNIQUE KEY,
      CreatorID					TINYINT UNSIGNED NOT NULL,
      CreateDate					DATETIME DEFAULT NOW(),
-     FOREIGN KEY(CreatorID) 	REFERENCES account(AccountID)
+     FOREIGN KEY(CreatorID) 	REFERENCES account(AccountID) ON DELETE CASCADE
  );
  
  DROP TABLE IF EXISTS GroupAccount;
@@ -42,7 +42,7 @@ CREATE TABLE account(
     AccountID								TINYINT UNSIGNED NOT NULL,
     JoinDate								DATETIME DEFAULT NOW(),
     PRIMARY KEY (GroupID, AccountID),
-    FOREIGN KEY(GroupID) 					REFERENCES `Group`(GroupID)
+    FOREIGN KEY(GroupID) 					REFERENCES `Group`(GroupID) ON DELETE CASCADE
  );
  
  DROP TABLE IF EXISTS TypeQuestion;
@@ -65,9 +65,9 @@ CREATE TABLE account(
     TypeID						TINYINT UNSIGNED NOT NULL,
     CreatorID 					TINYINT UNSIGNED NOT NULL,
     CreateDate 					DATETIME DEFAULT NOW(),
-    FOREIGN KEY(CategoryID) 	REFERENCES CategoryQuestion(CategoryID),
-    FOREIGN KEY(TypeID) 		REFERENCES TypeQuestion(TypeID),
-    FOREIGN KEY(CreatorID) 		REFERENCES	ACCOUNT(AccountID)
+    FOREIGN KEY(CategoryID) 	REFERENCES CategoryQuestion(CategoryID) ON DELETE CASCADE,
+    FOREIGN KEY(TypeID) 		REFERENCES TypeQuestion(TypeID) ON DELETE CASCADE,
+    FOREIGN KEY(CreatorID) 		REFERENCES	ACCOUNT(AccountID) ON DELETE CASCADE
  );
  
  DROP TABLE IF EXISTS Answer;
@@ -76,7 +76,7 @@ CREATE TABLE account(
     Content 	NVARCHAR(100) NOT NULL,
     QuestionID	TINYINT UNSIGNED NOT NULL,
     isCorrect	BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY(QuestionID) REFERENCES Question(QuestionID)
+    FOREIGN KEY(QuestionID) REFERENCES Question(QuestionID) ON DELETE CASCADE
  );
  
  DROP TABLE IF EXISTS Exam;
@@ -88,8 +88,8 @@ CREATE TABLE account(
     Duration	INT UNSIGNED NOT NULL,
     CreatorID	TINYINT UNSIGNED NOT NULL,
     CreateDate 	DATETIME DEFAULT NOW(),
-    FOREIGN KEY(CategoryID) REFERENCES CategoryQuestion(CategoryID),
-    FOREIGN KEY(CreatorID) REFERENCES ACCOUNT(AccountID)
+    FOREIGN KEY(CategoryID) REFERENCES CategoryQuestion(CategoryID) ON DELETE CASCADE,
+    FOREIGN KEY(CreatorID) REFERENCES ACCOUNT(AccountID) ON DELETE CASCADE
  );
  
  DROP TABLE IF EXISTS ExamQuestion;
@@ -97,12 +97,13 @@ CREATE TABLE account(
 	ExamID 						TINYINT UNSIGNED NOT NULL,
     QuestionID					TINYINT UNSIGNED NOT NULL,
     PRIMARY KEY(ExamID, QuestionID),
-    FOREIGN KEY(ExamID) 		REFERENCES Exam(ExamID),
-    FOREIGN KEY(QuestionID) 	REFERENCES Question(QuestionID)
+    FOREIGN KEY(ExamID) 		REFERENCES Exam(ExamID) ON DELETE CASCADE,
+    FOREIGN KEY(QuestionID) 	REFERENCES Question(QuestionID) ON DELETE CASCADE
  );
  
  INSERT INTO Department(DepartmentName)
- VALUES (N'Marketing'),
+ VALUES (N'Chờ việc'),
+		(N'Marketing'),
 		(N'Sale'),
 		(N'Bảo vệ'),
 		(N'Nhân sự'),

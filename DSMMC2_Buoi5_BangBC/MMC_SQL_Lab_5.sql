@@ -9,6 +9,8 @@ WHERE `DepartmentID` = (SELECT `DepartmentID`
                         FROM department 
                         WHERE `DepartmentName` = 'Sale');
 
+SELECT * FROM vw_SaleEmployee
+
 -- Question 2: Tạo view có chứa thông tin các account tham gia vào nhiều group nhất
 CREATE VIEW vw_MostGroupAccount AS
 SELECT a.*
@@ -18,6 +20,9 @@ HAVING COUNT(ga.`GroupID`) = (SELECT MAX(NumOfGroup)
                               FROM (SELECT COUNT(`GroupID`) AS NumOfGroup 
                                     FROM `groupaccount` 
                                     GROUP BY `AccountID`) AS temp);
+
+SELECT * FROM vw_MostGroupAccount;
+
 -- Question 3: Tạo view có chứa câu hỏi có những content quá dài (content quá 300 từ được coi là quá dài) và xóa nó đi
 CREATE VIEW vw_LongContentQuestion AS
 SELECT *
